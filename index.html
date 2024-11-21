@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Main Page</title>
+	</head>
+
+	<body>
+		<button id="requestForPIP">Request for Picture-In-Picture</button>
+
+		<div id="playing-in-pip-message" style="display: none">Playing in PIP</div>
+
+		<script type="text/javascript">
+            if ('documentPictureInPicture' in window) {
+                // The Document Picture-in-Picture API is supported.
+                window.alert("Picture-in-picture windows are not supported on your browser");
+            }
+
+			const closePictureInPicture = () => {
+				if (documentPictureInPicture.window) documentPictureInPicture.window.close();
+			};
+
+			const openPictureInPicture = async () => {
+				closePictureInPicture();
+
+				const pipWindow = await documentPictureInPicture.requestWindow({
+					width: 400,
+					height: 300,
+				});
+
+				const pipWindowContents = document.createElement("div");
+
+				pipWindowContents.innerHTML =
+					"This will show in the Picture In Picture Window! Yay!";
+
+				pipWindow.document.body.append(pipWindowContents);
+
+				const playingInPIPMessage = document.querySelector(
+					"#playing-in-pip-message"
+				);
+
+				playingInPIPMessage.setAttribute("style", "display: block;");
+				pipButton.setAttribute("style", "display: none;");
+
+				pipWindow.addEventListener("pagehide", () => {
+					playingInPIPMessage.setAttribute("style", "display: none;");
+					pipButton.setAttribute("style", "display: block;");
+				});
+			};
+
+			const pipButton = document.querySelector("#requestForPIP");
+
+			document.addEventListener("visibilitychange", (event) => {
+				if (document.hidden) openPictureInPicture();
+				else closePictureInPicture();
+			});
+
+			pipButton.addEventListener("click", openPictureInPicture);
+		</script>
+	</body>
+</html>
