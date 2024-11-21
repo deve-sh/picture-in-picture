@@ -72,8 +72,9 @@ _Some things to note:_
 
 ### A Demo
 
-<video width="900" height="467.43" controls src="/assets/demo-video.mp4">
-</video>
+Check out a demo of the capabilities of PIP in Modern Browsers:
+
+https://github.com/user-attachments/assets/2b0cab75-6321-4188-acb4-87e9f727c1d5
 
 ### Source Code for the demo
 
